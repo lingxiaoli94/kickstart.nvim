@@ -192,6 +192,17 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save file' })
 
+-- Define a command to open the current file in Obsidian
+vim.api.nvim_create_user_command('IO', function()
+  local vault_name = 'Everything' -- Replace with your Obsidian vault name
+  local file_name = vim.fn.expand '%:r'
+  local obsidian_uri = string.format('obsidian://open?vault=%s&file=%s', vault_name, file_name)
+  vim.cmd('silent !open "' .. obsidian_uri .. '"')
+end, {})
+
+-- Map the command to <leader>io
+vim.api.nvim_set_keymap('n', '<leader>io', ':IO<CR>', { noremap = true, silent = true })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -865,39 +876,6 @@ require('lazy').setup({
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
-  {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { 'echasnovski/mini.icons' },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-  },
-  {
-    'lervag/vimtex',
-    lazy = false, -- we don't want to lazy load VimTeX
-    -- tag = "v2.15", -- uncomment to pin to a specific release
-    init = function()
-      -- VimTeX configuration goes here, e.g.
-      vim.g.vimtex_view_method = 'skim'
-      vim.g.vimtex_quickfix_open_on_warning = false
-    end,
-  },
-  -- install without yarn or npm
-  {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    ft = { 'markdown' },
-    build = function()
-      vim.fn['mkdp#util#install']()
-    end,
-    init = function()
-      vim.g.mkdp_preview_options = {
-        disable_sync_scroll = true,
-      }
-      vim.keymap.set('n', '<leader>lv', '<Plug>MarkdownPreview', { noremap = true, silent = true })
-    end,
-  },
-  { 'github/copilot.vim' },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -920,7 +898,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
