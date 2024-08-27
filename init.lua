@@ -579,8 +579,21 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
+        pyright = {
+          settings = {
+            pyright = {
+              disableOrganizeImports = true, -- Using Ruff
+            },
+            python = {
+              analysis = {
+                ignore = { '*' }, -- Using Ruff
+                typeCheckingMode = 'off', -- Using mypy
+              },
+            },
+          },
+        },
         ruff = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -591,7 +604,6 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -622,6 +634,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'ruff',
+        'htmlbeautifier', -- Used to format HTML code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -668,12 +681,14 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'ruff_format' },
+        html = { 'htmlbeautifier' },
+        cpp = { 'clang-format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        -- javascript = { { 'prettierd', 'prettier' } },
       },
     },
   },

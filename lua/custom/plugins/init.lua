@@ -4,11 +4,18 @@
 -- See the kickstart.nvim README for more information
 return {
   {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { 'echasnovski/mini.icons' },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('nvim-tree').setup {}
+    end,
+    init = function()
+      vim.keymap.set('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+    end,
   },
   {
     'lervag/vimtex',
@@ -36,4 +43,22 @@ return {
     end,
   },
   { 'github/copilot.vim' },
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {
+      -- on_attach = function(client)
+      --   client.server_capabilities.documentFormattingProvider = false
+      --   client.server_capabilities.documentRangeFormattingProvider = false
+      -- end,
+      settings = {
+        tsserver_file_preferences = {
+          quotePreference = 'auto',
+        },
+        tsserver_format_options = {
+          indentSize = 2,
+        },
+      },
+    },
+  },
 }
