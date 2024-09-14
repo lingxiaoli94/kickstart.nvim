@@ -14,7 +14,9 @@ return {
       require('nvim-tree').setup {}
     end,
     init = function()
-      vim.keymap.set('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>nn', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>nc', '<cmd>NvimTreeCollapse<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>nf', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
     end,
   },
   {
