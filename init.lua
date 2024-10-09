@@ -674,7 +674,6 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'ruff',
-        'htmlbeautifier', -- Used to format HTML code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -728,7 +727,6 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'ruff_format' },
-        html = { 'htmlbeautifier' },
         cpp = { 'clang-format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
