@@ -29,21 +29,6 @@ return {
       vim.g.vimtex_quickfix_open_on_warning = false
     end,
   },
-  -- install without yarn or npm
-  {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    ft = { 'markdown' },
-    build = function()
-      vim.fn['mkdp#util#install']()
-    end,
-    init = function()
-      vim.g.mkdp_preview_options = {
-        disable_sync_scroll = true,
-      }
-      vim.keymap.set('n', '<leader>lv', '<Plug>MarkdownPreview', { noremap = true, silent = true })
-    end,
-  },
   { 'github/copilot.vim' },
   {
     'pmizio/typescript-tools.nvim',
